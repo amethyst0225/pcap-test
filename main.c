@@ -1,6 +1,7 @@
 #include "pcap-test.h"
 
-void usage() {
+void usage() 
+{
 	printf("syntax: pcap-test <interface>\n");
 	printf("sample: pcap-test wlan0\n");
 }
@@ -9,8 +10,10 @@ Param param = {
 	.dev_ = NULL
 };
 
-bool parse(Param* param, int argc, char* argv[]) {
-	if (argc != 2) {
+bool parse(Param* param, int argc, char* argv[]) 
+{
+	if (argc != 2) 
+	{
 		usage();
 		return false;
 	}
@@ -28,17 +31,17 @@ int main(int argc, char *argv[])
 
 	if (pcap == NULL)
 	{
-        fprintf(stderr, "pcap_open_live(%s) return null - %s\n", param.dev_, errbuf);
+       	 	fprintf(stderr, "pcap_open_live(%s) return null - %s\n", param.dev_, errbuf);
 		return -1;
-    }
+    	}
 
 	while(true)
 	{
 		struct pcap_pkthdr *header;
 		const u_char *packet;
-        struct libnet_ethernet_hdr *ethernet;
-        struct libnet_ipv4_hdr *ipv4;
-        struct libnet_tcp_hdr *tcp;
+        	struct libnet_ethernet_hdr *ethernet;
+        	struct libnet_ipv4_hdr *ipv4;
+        	struct libnet_tcp_hdr *tcp;
 
    		int res = pcap_next_ex(pcap, &header, &packet);
 
@@ -68,10 +71,10 @@ int main(int argc, char *argv[])
 		
 		//print data
 		printf("Data: ");
-        for (uint32_t i = 0; i < data_len && i < 20; i++)
+        	for (uint32_t i = 0; i < data_len && i < 20; i++)
 			printf("0x%02X ", packet[header_len + i]);
 
-        printf("\n\n");
+        	printf("\n\n");
 	}
 
 	pcap_close(pcap);
